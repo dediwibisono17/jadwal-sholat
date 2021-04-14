@@ -14,9 +14,10 @@
 		<h1>Jadwal Sholat</h1>
 		<div id="waktu"></div>
 <div class="table-responsive">
-    <table>
+    <table class="table-striped table">
         <thead>
             <tr>
+                <th>Tanggal</th>
                 <th>Imsak</th>
                 <th>Subuh</th>
                 <th>Dzuhur</th>
@@ -26,19 +27,11 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td class="imsak">12</td>
-                <td class="subuh">12</td>
-                <td class="dzuhur">12</td>
-                <td class="ashar">12</td>
-                <td class="maghrib">12</td>
-                <td class="isya">12</td>
-            </tr>
+            
         </tbody>
 
     </table>
-</div>
-<input type="date" class="hidden" id="jadwal">
+    </div><input type="date" class="hidden" id="jadwal">
 <strong>NB: Mungkin ada perbedaan beberapa menit</strong>
 </div>
   <script
@@ -46,7 +39,7 @@
   integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
   crossorigin="anonymous"></script>
   <script>
-    var newDate = new Date();
+   var newDate = new Date();
 var senin = newDate.getDay();
 var getHari = newDate.getDate();
 var getBulan = newDate.getMonth() + 1;
@@ -78,7 +71,7 @@ var hariWording = {
 }
 
 var timeHighlight = `
-    <div>${hariWording[senin]}, ${getHari} ${monthWording[getBulan]} ${getTahun}</div>
+    <div> ${monthWording[getBulan]} ${getTahun}</div>
 `
 
 $("#waktu").append(timeHighlight);
@@ -103,33 +96,43 @@ console.log(jadwal)
 
 var city= 'jakarta';
 $.ajax({
-	url : 'https://api.pray.zone/v2/times/day.json?city=jakarta&date=2021-04-14',
+	//url : 'https://api.pray.zone/v2/times/day.json?city=jakarta&date=2021-04-14',
+  url: 'https://api.pray.zone/v2/times/this_month.json?city=jakarta',
   method: 'GET',
-  data: {city: city, date: jadwal}, 
-  success: (response)=>{
-  	console.log(response)
+  //data: {city: city, date: jadwal}, 
+  /*success: (response)=>{
+  	
   	$('.imsak').text(response.results.datetime[0].times.Imsak);
     $('.subuh').text(response.results.datetime[0].times.Fajr);
     $('.dzuhur').text(response.results.datetime[0].times.Dhuhr);
     $('.ashar').text(response.results.datetime[0].times.Asr);
     $('.maghrib').text(response.results.datetime[0].times.Maghrib);
     $('.isya').text(response.results.datetime[0].times.Isha);
+  }*/
+  success: (response) => {
+  	console.log(response.results.datetime.length);
+    var a;
+    for (a=0; a<response.results.datetime.length; a++) {
+    
+    	$('tbody').append(`
+      		<tr>
+          <td class="imsak">${response.results.datetime[a].date.gregorian}</td>
+                <td class="imsak">${response.results.datetime[a].times.Imsak}</td>
+                <td class="subuh">${response.results.datetime[a].times.Fajr}</td>
+                <td class="dzuhur">${response.results.datetime[a].times.Dhuhr}</td>
+                <td class="ashar">${response.results.datetime[a].times.Asr}</td>
+                <td class="maghrib">${response.results.datetime[a].times.Maghrib}</td>
+                <td class="isya">${response.results.datetime[a].times.Isha}</td>
+            </tr>
+      `)
+    
+    }
   }
 })
 
 }
 
 jadwal();
-
-/* "Imsak": "04:34",
-"Sunrise": "05:53",
-"Fajr": "04:44",
-"Dhuhr": "11:53",
-"Asr": "15:12",
-"Sunset": "17:53",
-"Maghrib": "18:05",
-"Isha": "18:58",
-"Midnight": "23:18" */
   </script>
 </body>
 </html>
