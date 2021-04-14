@@ -1,0 +1,27 @@
+#app {
+	 display: block;
+}
+ table {
+	 margin: 8px auto;
+	 text-align: center;
+	 display: block;
+}
+ table th {
+	 padding: 8px;
+}
+ table tr {
+	 border: 1px solid;
+}
+ table tr td {
+	 text-align: center;
+	 padding: 8px;
+}
+ table tr td:nth-child(5) {
+	 background: green;
+	 color: white;
+}
+ strong {
+	 font-size: 12px;
+	 font-style: italic;
+}
+ 
