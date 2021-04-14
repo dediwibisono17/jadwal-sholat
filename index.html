@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Jadwal Sholat</title>
+  <link href="css/style.css" rel="stylesheet">
 </head>
 <body>
   <div id="waktu"></div>
@@ -33,6 +34,95 @@
     <input type="date" class="hidden" id="jadwal">
     <strong>NB: Mungkin ada perbedaan beberapa menit</strong>
   </div>
-  
+  <script
+  src="https://code.jquery.com/jquery-3.6.0.min.js"
+  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+  crossorigin="anonymous"></script>
+  <script>
+    var newDate = new Date();
+var senin = newDate.getDay();
+var getHari = newDate.getDate();
+var getBulan = newDate.getMonth() + 1;
+var getTahun = newDate.getFullYear();
+
+var monthWording = {
+    '1': 'Januari',
+    '2': 'Februari',
+    '3': 'Maret',
+    '4': 'April',
+    '5': 'Mei',
+    '6': 'Juni',
+    '7': 'Juli',
+    '8': 'Agustus',
+    '9': 'September',
+    '10': 'Oktober',
+    '11': 'November',
+    '12': 'Desember',
+}
+
+var hariWording = {
+    '1': 'Senin',
+    '2': 'Selasa',
+    '3': 'Rabu',
+    '4': 'Kamis',
+    '5': 'Jumat',
+    '6': 'Sabtu',
+    '0': 'Ahad'
+}
+
+var timeHighlight = `
+    <div>${hariWording[senin]}, ${getHari} ${monthWording[getBulan]} ${getTahun}</div>
+`
+
+$("#waktu").append(timeHighlight);
+
+function jadwal(){
+var today = new Date();
+var dd = today.getDate();
+var mm = today.getMonth() + 1; //January is 0!
+var yyyy = today.getFullYear();
+if (dd < 10) {
+    dd = '0' + dd
+}
+if (mm < 10) {
+    mm = '0' + mm
+}
+
+var min_yyyy = yyyy - 2;
+today = yyyy + '-' + mm + '-' + dd;
+var jadwal = document.getElementById('jadwal').setAttribute("value", today);
+
+console.log(jadwal)
+
+var city= 'jakarta';
+$.ajax({
+	url : 'https://api.pray.zone/v2/times/day.json?city=jakarta&date=2021-04-14',
+  method: 'GET',
+  data: {city: city, date: jadwal}, 
+  success: (response)=>{
+  	console.log(response)
+  	$('.imsak').text(response.results.datetime[0].times.Imsak);
+    $('.subuh').text(response.results.datetime[0].times.Fajr);
+    $('.dzuhur').text(response.results.datetime[0].times.Dhuhr);
+    $('.ashar').text(response.results.datetime[0].times.Asr);
+    $('.maghrib').text(response.results.datetime[0].times.Maghrib);
+    $('.isya').text(response.results.datetime[0].times.Isha);
+  }
+})
+
+}
+
+jadwal();
+
+/* "Imsak": "04:34",
+"Sunrise": "05:53",
+"Fajr": "04:44",
+"Dhuhr": "11:53",
+"Asr": "15:12",
+"Sunset": "17:53",
+"Maghrib": "18:05",
+"Isha": "18:58",
+"Midnight": "23:18" */
+  </script>
 </body>
 </html>
