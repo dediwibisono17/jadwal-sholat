@@ -93,7 +93,7 @@ var hariWording = {
 }
 
 var timeHighlight = `
-    <div> ${monthWording[getBulan]} ${getTahun}</div>
+    <h3> ${monthWording[getBulan]} ${getTahun}</h3>
 `
 
 $("#waktu").append(timeHighlight);
@@ -116,7 +116,7 @@ $("#waktu").append(timeHighlight);
 	      console.log(sub_tgl)
         	 $('tbody').append(`
           <tr>
-          <td class="tanggal">${response.results.datetime[a].date.gregorian}</td>
+          <td class="tanggal">${sub_tgl}</td>
           <td class="imsak">${response.results.datetime[a].times.Imsak}</td>
           <td class="subuh">${response.results.datetime[a].times.Fajr}</td>
           <td class="dzuhur">${response.results.datetime[a].times.Dhuhr}</td>
