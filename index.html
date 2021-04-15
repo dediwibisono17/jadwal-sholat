@@ -113,7 +113,7 @@ $("#waktu").append(timeHighlight);
         for (a = 0; a < response.results.datetime.length; a++) {
 		var tgl = response.results.datetime[a].date.gregorian;
 		var sub_tgl = tgl.substring(8, 10);
-	      console.log(sub_tgl)
+	 
         	 $('tbody').append(`
           <tr>
           <td class="tanggal">${sub_tgl}</td>
