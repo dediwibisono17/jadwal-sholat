@@ -106,7 +106,8 @@ $("#waktu").append(timeHighlight);
       data: 'city=' + value,
       success: function(response) {
         var tgl = response.results.datetime[a].date.gregorian;
-	var sub_tgl = tg;.substring(8, 10)
+	var sub_tgl = tg;.substring(8, 10);
+	      console.log(sub_tgl)
         $('tbody').children().remove();
         var a;
         $("#city_name").text(response.results.location.city);
