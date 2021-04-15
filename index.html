@@ -105,14 +105,15 @@ $("#waktu").append(timeHighlight);
       url: 'https://api.pray.zone/v2/times/this_month.json',
       data: 'city=' + value,
       success: function(response) {
-        var tgl = response.results.datetime[a].date.gregorian;
-	var sub_tgl = tgl.substring(8, 10);
-	      console.log(sub_tgl)
+        
         $('tbody').children().remove();
         var a;
         $("#city_name").text(response.results.location.city);
         
         for (a = 0; a < response.results.datetime.length; a++) {
+		var tgl = response.results.datetime[a].date.gregorian;
+		var sub_tgl = tgl.substring(8, 10);
+	      console.log(sub_tgl)
         	 $('tbody').append(`
           <tr>
           <td class="tanggal">${response.results.datetime[a].date.gregorian}</td>
